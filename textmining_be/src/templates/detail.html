@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detail Pelanggaran</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<h2>Sistem Monitoring Pelanggaran</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nama Akun</th>
+            <th>Komentar</th>
+            <th>Kategori Pelanggaran</th>
+        </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+</table>
+
+<script>
+    const data = JSON.parse(localStorage.getItem("filteredData"));
+    const tbody = document.getElementById("table-body");
+
+    data.forEach(item => {
+        const row = `
+            <tr>
+                <td>${item.username}</td>
+                <td>${item.text}</td>
+                <td>${item.prediction}</td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+                   precision    recall  f1-score   support
+
+          abusive       0.90      0.98      0.94       883
+pelecehan seksual       0.98      0.87      0.92       724
+
+         accuracy                           0.93      1607
+        macro avg       0.94      0.93      0.93      1607
+     weighted avg       0.94      0.93      0.93      1607

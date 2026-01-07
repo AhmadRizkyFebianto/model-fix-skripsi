@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiktok Platform Comment Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<h1>Tiktok Platform Comment Detection</h1>
+<p>Intelligent analysis to identify comments that violate UU ITE</p>
+
+<input type="text" id="video_url" placeholder="Paste the link here">
+<button onclick="analyze()">Check</button>
+
+<div class="buttons">
+    <button onclick="filterResult('Pelanggaran Seksual')">
+        Pelanggaran Pelecehan Seksual
+    </button>
+    <button onclick="filterResult('Non Pelanggaran Pelecehan Seksual')">
+        Pelanggaran Non Pelecehan Seksual
+    </button>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
