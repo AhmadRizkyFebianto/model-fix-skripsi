@@ -278,17 +278,105 @@ function detect() {
 // ===============================
 // UPDATE CHART (AMAN)
 // ===============================
+// function updateChart(data) {
+//   if (!data || data.length === 0) return;
+
+//   const sexual = data.filter(
+//     (d) => d.prediction === "Pelanggaran Seksual"
+//   ).length;
+
+//   const nonSexual = data.length - sexual;
+
+//   const sexualPercent = ((sexual / data.length) * 100).toFixed(1);
+//   const nonSexualPercent = ((nonSexual / data.length) * 100).toFixed(1);
+
+//   const ctx = document.getElementById("resultChart");
+
+//   if (chart) chart.destroy();
+
+//   chart = new Chart(ctx, {
+//     type: "bar",
+//     data: {
+//       labels: ["Pelanggaran Seksual", "Non Pelanggaran Pelecehan Seksual"],
+//       datasets: [
+//         {
+//           label: "Persentase (%)",
+//           data: [sexualPercent, nonSexualPercent],
+//           backgroundColor: ["#1f77b4", "#4da3ff"],
+//           borderRadius: 6,
+//           barThickness: 45,
+//         },
+//       ],
+//     },
+//     options: {
+//       responsive: true,
+//       maintainAspectRatio: true,
+//       aspectRatio: 2,
+//       indexAxis: "y",
+//       scales: {
+//         x: {
+//           max: 100,
+//           ticks: {
+//             callback: (value) => value + "%",
+//           },
+//           title: {
+//             display: true,
+//             text: "Persentase",
+//           },
+//           grid: {
+//             display: false,
+//           },
+//         },
+//         y: {
+//           title: {
+//             display: true,
+//             text: "Kategori Pelanggaran",
+//           },
+//         },
+//       },
+//       plugins: {
+//         legend: {
+//           display: false,
+//         },
+//       },
+//     },
+//   });
+// }
+
 function updateChart(data) {
-  if (!data || data.length === 0) return;
+  if (!data || data.length === 0) {
+    console.log("Data kosong atau undefined");
+    return;
+  }
 
-  const sexual = data.filter(
-    (d) => d.prediction === "Pelanggaran Seksual"
-  ).length;
+  // DEBUG: Lihat semua data dan nilai prediction
+  console.log("=== DEBUG DATA ===");
+  console.log("Total data:", data.length);
+  console.log("Sample data:", data.slice(0, 5));
 
-  const nonSexual = data.length - sexual;
+  const uniquePredictions = [...new Set(data.map((d) => d.prediction))];
+  console.log("Unique prediction values:", uniquePredictions);
 
-  const sexualPercent = ((sexual / data.length) * 100).toFixed(1);
-  const nonSexualPercent = ((nonSexual / data.length) * 100).toFixed(1);
+  // Filter dengan label yang benar
+  const sexual = data.filter((d) => {
+    return d.prediction === "pelecehan seksual";
+  }).length;
+
+  const nonSexual = data.filter((d) => {
+    return d.prediction === "Non Pelecehan Seksual";
+  }).length;
+
+  console.log("=== HASIL HITUNG ===");
+  console.log("Pelecehan Seksual:", sexual);
+  console.log("Non Pelecehan Seksual:", nonSexual);
+
+  const total = sexual + nonSexual;
+  const sexualPercent = total > 0 ? ((sexual / total) * 100).toFixed(1) : 0;
+  const nonSexualPercent =
+    total > 0 ? ((nonSexual / total) * 100).toFixed(1) : 0;
+
+  console.log("Sexual percent:", sexualPercent + "%");
+  console.log("Non-sexual percent:", nonSexualPercent + "%");
 
   const ctx = document.getElementById("resultChart");
 
@@ -297,7 +385,7 @@ function updateChart(data) {
   chart = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: ["Pelanggaran Seksual", "Non Pelanggaran Pelecehan Seksual"],
+      labels: ["Pelecehan Seksual", "Non Pelecehan Seksual"],
       datasets: [
         {
           label: "Persentase (%)",
